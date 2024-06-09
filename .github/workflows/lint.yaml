@@ -27,6 +27,10 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
+      - name: generate
+        run: |
+          make gen
+
       - name: lint
         run: |
           make lint
