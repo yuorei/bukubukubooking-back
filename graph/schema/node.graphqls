@@ -1,0 +1,12 @@
+scalar Upload
+scalar DateTime
+directive @goField(forceResolver: Boolean, name: String) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+interface Node {
+  id: ID! @goField(forceResolver: true)
+}
+
+type Query{
+  node(id: ID!): Node!
+  nodes(ids: [ID!]!): [Node!]!
+}

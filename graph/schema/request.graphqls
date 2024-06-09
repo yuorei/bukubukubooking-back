@@ -1,0 +1,63 @@
+# type
+type Request implements Node{
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  borrower: User! @goField(forceResolver: true)
+  requestStatus: RequestStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  messages: [Message!]! @goField(forceResolver: true)
+}
+
+# enum
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+# input
+input createRequestInput {
+  bookId: ID!
+  borrowerId: ID!
+}
+
+input updateRequestInput {
+  id: ID!
+  requestStatus: RequestStatus!
+}
+
+# payload
+type createRequestPayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  borrower: User! @goField(forceResolver: true)
+  requestStatus: RequestStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type updateRequestPayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  borrower: User! @goField(forceResolver: true)
+  requestStatus: RequestStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+# Mutation
+extend type Mutation {
+  createRequest(input: createRequestInput!): createRequestPayload!
+  updateRequest(input: updateRequestInput!): updateRequestPayload!
+  deleteRequest(id: ID!): Boolean!
+}
+
+# Query
+extend type Query {
+  request(id: ID!): Request
+  requests: [Request!]!
+}

@@ -1,0 +1,25 @@
+services:
+  api:
+    build:
+      context: .
+      # Correct the path to your Dockerfile
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:8080
+    # Important to bind/mount your codebase dir to /app dir for live reload
+    volumes:
+      - ./:/app
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bukubukubooking
+      MYSQL_USER: yuorei
+      MYSQL_PASSWORD: yuorei_pass
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d

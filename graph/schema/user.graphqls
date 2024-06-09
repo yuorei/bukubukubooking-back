@@ -1,0 +1,58 @@
+# type
+type User implements Node {
+  id: ID!
+  username: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  books: [Book!]! @goField(forceResolver: true)
+  booksLent: [Book!]! @goField(forceResolver: true)
+  booksBorrowed: [Book!]! @goField(forceResolver: true)
+  requests: [Request!]! @goField(forceResolver: true)
+  messages: [Message!]! @goField(forceResolver: true)
+}
+
+# input
+input createUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input updateUserInput {
+  id: ID!
+  username: String
+  email: String
+  password: String
+}
+
+# payload
+type createUserPayload implements Node {
+  id: ID!
+  username: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type updateUserPayload implements Node {
+  id: ID!
+  username: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# Mutation
+type Mutation {
+  createUser(input: createUserInput!): createUserPayload!
+  updateUser(input: updateUserInput!): updateUserPayload!
+  deleteUser(id: ID!): Boolean!
+}
+
+# Query
+extend type Query {
+  user(id: ID!): User
+  users: [User!]!
+}

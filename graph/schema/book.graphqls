@@ -1,0 +1,68 @@
+# type
+type Book implements Node {
+  id: ID! @goField(forceResolver: true)
+  title: String!
+  author: String!
+  owner: User! @goField(forceResolver: true)
+  status: BookStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+# enum
+enum BookStatus {
+  AVAILABLE
+  BORROWED
+  RESERVED
+}
+
+# input
+input createBookInput {
+  title: String!
+  author: String!
+  ownerId: ID!
+}
+
+input updateBookInput {
+  id: ID!
+  title: String
+  author: String
+  status: BookStatus
+}
+
+# payload
+type createBookPayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  title: String!
+  author: String!
+  owner: User! @goField(forceResolver: true)
+  status: BookStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type updateBookPayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  title: String!
+  author: String!
+  owner: User! @goField(forceResolver: true)
+  status: BookStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+# Mutation
+extend type Mutation {
+  createBook(input: createBookInput!): createBookPayload!
+  updateBook(input: updateBookInput!): updateBookPayload!
+  deleteBook(id: ID!): Boolean!
+}
+
+# Query
+extend type Query {
+  book(id: ID!): Book
+  books: [Book!]!
+}

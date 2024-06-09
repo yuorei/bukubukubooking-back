@@ -1,0 +1,55 @@
+# type
+type Message implements Node {
+  id: ID! @goField(forceResolver: true)
+  request: Request!
+  sender: User! @goField(forceResolver: true)
+  message: String!
+  createdAt: DateTime!
+}
+
+# input
+input createMessageInput {
+  requestId: ID!
+  senderId: ID!
+  message: String!
+}
+
+input updateMessageInput {
+  id: ID!
+  message: String!
+}
+
+# payload
+type createMessagePayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  request: Request!
+  sender: User! @goField(forceResolver: true)
+  message: String!
+  createdAt: DateTime!
+}
+
+type updateMessagePayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  request: Request!
+  sender: User! @goField(forceResolver: true)
+  message: String!
+  createdAt: DateTime!
+}
+
+# Mutation
+extend type Mutation {
+  createMessage(input: createMessageInput!): createMessagePayload!
+  updateMessage(input: updateMessageInput!): updateMessagePayload!
+  deleteMessage(id: ID!): Boolean!
+}
+
+# Query
+extend type Query {
+  message(id: ID!): Message
+  messages: [Message!]!
+}
+
+# Subscription
+type Subscription {
+  messageAdded(requestId: ID!): Message!
+}

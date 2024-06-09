@@ -1,0 +1,45 @@
+# type
+type BookLike implements Node {
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  user: User! @goField(forceResolver: true)
+  createdAt: DateTime!
+}
+
+# input
+input createBookLikeInput {
+  bookId: ID!
+  userId: ID!
+}
+
+input updateBookLikeInput {
+  id: ID!
+}
+
+# payload
+type createBookLikePayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  user: User! @goField(forceResolver: true)
+  createdAt: DateTime!
+}
+
+type updateBookLikePayload implements Node {
+  id: ID! @goField(forceResolver: true)
+  book: Book! @goField(forceResolver: true)
+  user: User! @goField(forceResolver: true)
+  createdAt: DateTime!
+}
+
+# Mutation
+extend type Mutation {
+  createBookLike(input: createBookLikeInput!): createBookLikePayload!
+  updateBookLike(input: updateBookLikeInput!): updateBookLikePayload!
+  deleteBookLike(id: ID!): Boolean!
+}
+
+# Query
+extend type Query {
+  bookLike(id: ID!): BookLike
+  bookLikes(bookID: ID!): [BookLike!]!
+}
