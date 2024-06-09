@@ -114,7 +114,7 @@ func SlackLogin(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println(userInfo.User.Name)
-	_,err=w.Write(jsonData)
+	_, err = w.Write(jsonData)
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
