@@ -1,0 +1,82 @@
+CREATE TABLE USERS (
+    id VARCHAR(255) PRIMARY KEY, -- "slackのuserID"
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP
+);
+
+CREATE TABLE BOOKS (
+    id VARCHAR(255) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255),
+    owner VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES USERS(id)
+);
+
+CREATE TABLE TAGS (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE BOOKS_TAGS (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    book_id VARCHAR(255),
+    tag_id VARCHAR(255),
+    FOREIGN KEY (book_id) REFERENCES BOOKS(id),
+    FOREIGN KEY (tag_id) REFERENCES TAGS(id)
+);
+
+CREATE TABLE AUTHORS (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE BOOKS_AUTHORS (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    book_id VARCHAR(255),
+    author_id VARCHAR(255),
+    FOREIGN KEY (book_id) REFERENCES BOOKS(id),
+    FOREIGN KEY (author_id) REFERENCES AUTHORS(id)
+);
+
+CREATE TABLE BOOK_LIKES (
+    id VARCHAR(255) PRIMARY KEY,
+    book_id VARCHAR(255),
+    user_id VARCHAR(255),
+    status VARCHAR(255),
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (book_id) REFERENCES BOOKS(id),
+    FOREIGN KEY (user_id) REFERENCES USERS(id)
+);
+
+CREATE TABLE REQUESTS (
+    id VARCHAR(255) PRIMARY KEY,
+    book_id VARCHAR(255) NOT NULL,
+    sender_user_id VARCHAR(255) NOT NULL,
+    receiver_user_id VARCHAR(255) NOT NULL,
+    status VARCHAR(255),
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    finished_at TIMESTAMP,
+    FOREIGN KEY (book_id) REFERENCES BOOKS(id),
+    FOREIGN KEY (sender_user_id) REFERENCES USERS(id),
+    FOREIGN KEY (receiver_user_id) REFERENCES USERS(id)
+);
+
+CREATE TABLE MESSAGES (
+    id VARCHAR(255) PRIMARY KEY,
+    request_id VARCHAR(255),
+    sender_id VARCHAR(255),
+    status VARCHAR(255),
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (request_id) REFERENCES REQUESTS(id),
+    FOREIGN KEY (sender_id) REFERENCES USERS(id)
+);
