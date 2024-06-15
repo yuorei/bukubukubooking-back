@@ -16,7 +16,9 @@ type Node interface {
 type Book struct {
 	ID        string     `json:"id"`
 	Title     string     `json:"title"`
-	Author    string     `json:"author"`
+	Author    []*string  `json:"author"`
+	Tags      []*string  `json:"tags,omitempty"`
+	Publisher *string    `json:"publisher,omitempty"`
 	Owner     *User      `json:"owner"`
 	Status    BookStatus `json:"status"`
 	CreatedAt string     `json:"createdAt"`
@@ -125,7 +127,9 @@ func (this CreateBookLikePayload) GetID() string { return this.ID }
 type CreateBookPayload struct {
 	ID        string     `json:"id"`
 	Title     string     `json:"title"`
-	Author    string     `json:"author"`
+	Author    []*string  `json:"author"`
+	Publisher *string    `json:"publisher,omitempty"`
+	Tags      []*string  `json:"tags,omitempty"`
 	Owner     *User      `json:"owner"`
 	Status    BookStatus `json:"status"`
 	CreatedAt string     `json:"createdAt"`
@@ -230,7 +234,9 @@ func (this UpdateBookLikePayload) GetID() string { return this.ID }
 type UpdateBookPayload struct {
 	ID        string     `json:"id"`
 	Title     string     `json:"title"`
-	Author    string     `json:"author"`
+	Author    []*string  `json:"author"`
+	Publisher *string    `json:"publisher,omitempty"`
+	Tags      []*string  `json:"tags,omitempty"`
 	Owner     *User      `json:"owner"`
 	Status    BookStatus `json:"status"`
 	CreatedAt string     `json:"createdAt"`

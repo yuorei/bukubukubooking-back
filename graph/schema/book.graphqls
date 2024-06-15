@@ -2,7 +2,9 @@
 type Book implements Node {
   id: ID! @goField(forceResolver: true)
   title: String!
-  author: String!
+  author: [String]!
+  tags: [String]
+  publisher: String
   owner: User! @goField(forceResolver: true)
   status: BookStatus!
   createdAt: DateTime!
@@ -35,7 +37,9 @@ input updateBookInput {
 type createBookPayload implements Node {
   id: ID! @goField(forceResolver: true)
   title: String!
-  author: String!
+  author: [String]!
+  publisher: String
+  tags: [String]
   owner: User! @goField(forceResolver: true)
   status: BookStatus!
   createdAt: DateTime!
@@ -46,7 +50,9 @@ type createBookPayload implements Node {
 type updateBookPayload implements Node {
   id: ID! @goField(forceResolver: true)
   title: String!
-  author: String!
+  author: [String]!
+  publisher: String
+  tags: [String]
   owner: User! @goField(forceResolver: true)
   status: BookStatus!
   createdAt: DateTime!
