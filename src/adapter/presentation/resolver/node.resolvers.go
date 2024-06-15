@@ -7,6 +7,7 @@ package resolver
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/yuorei/bukubukubooking-back/graph/generated"
 	"github.com/yuorei/bukubukubooking-back/src/domain"
@@ -14,7 +15,26 @@ import (
 
 // Node is the resolver for the node field.
 func (r *queryResolver) Node(ctx context.Context, id string) (domain.Node, error) {
-	panic(fmt.Errorf("not implemented: Node - node"))
+	splitID := strings.Split(id, ":")
+
+	kind := splitID[0]
+	id = splitID[1]
+	switch kind {
+	case "user":
+		return r.User(ctx, id)
+	case "book":
+		return r.Book(ctx, id)
+	case "request":
+		return r.Request(ctx, id)
+	case "book_like":
+		return r.BookLike(ctx, id)
+	case "message":
+		return r.Message(ctx, id)
+	case "book_reservation":
+		return r.BookReservation(ctx, id)
+	default:
+		return nil, fmt.Errorf("No such ID defined")
+	}
 }
 
 // Nodes is the resolver for the nodes field.
